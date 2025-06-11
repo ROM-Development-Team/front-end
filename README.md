@@ -1,54 +1,62 @@
-# React + TypeScript + Vite
+# 🎨 Frontend Team Welcome Guide
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Welcome, UI Artists and UX Architects!
 
-Currently, two official plugins are available:
+You're not just building buttons and screens—you’re crafting the face of the future. Every line of code you write helps users feel heard, seen, and connected. Welcome to a team where the interface meets emotion.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🧭 Our Mission
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+To design clean, intuitive, and emotionally intelligent user experiences that inspire connection and self-expression.
 
-```js
-export default tseslint.config({
-    extends: [
-        // Remove ...tseslint.configs.recommended and replace with this
-        ...tseslint.configs.recommendedTypeChecked,
-        // Alternatively, use this for stricter rules
-        ...tseslint.configs.strictTypeChecked,
-        // Optionally, add this for stylistic rules
-        ...tseslint.configs.stylisticTypeChecked,
-    ],
-    languageOptions: {
-        // other options...
-        parserOptions: {
-            project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-            tsconfigRootDir: import.meta.dirname,
-        },
-    },
-});
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 💼 Key Responsibilities
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+- Implement responsive, accessible interfaces using React or other JS frameworks.
+- Connect with backend APIs for dynamic data display.
+- Ensure a smooth UX across web and mobile.
+- Optimize performance for speed and fluidity.
+- Work closely with ML and Docs teams for feature integration.
 
-export default tseslint.config({
-    plugins: {
-        // Add the react-x and react-dom plugins
-        "react-x": reactX,
-        "react-dom": reactDom,
-    },
-    rules: {
-        // other rules...
-        // Enable its recommended typescript rules
-        ...reactX.configs["recommended-typescript"].rules,
-        ...reactDom.configs.recommended.rules,
-    },
-});
-```
+---
+
+## 🛠️ Feature Tasks You’ll Work On
+
+### Authentication & User Management
+- Sign Up/Login (Email, Google OAuth)
+- Forgot Password flow
+- Profile Setup UI
+- Anonymous mode toggle UI
+
+### Rant Posting
+- Rant composer interface (text, media, tagging)
+- Audience setting toggles (public, friends-only, anonymous)
+- Sentiment tag visuals
+
+### Feed / Timeline
+- Infinite scroll feed
+- Filter UI (tags, sentiment, anonymity)
+- Rant display cards
+
+### Interactions
+- Like, Comment, Share buttons
+- Reply with anonymous toggle
+- Bookmark, report, Rant of the Day UI
+
+### Generative AI
+- UI for AI reply, captions, prompt suggestions
+- “Let Go” animation for deleted rants
+
+### Unique Features
+- Mood Thermometer visual graph
+- “Whispers” hidden thread toggles
+- Confession Circle UI
+- Anonymous Voice Rant recorder UI
+
+---
+
+## ✨ Your Impact
+
+You are the bridge between human emotion and digital interaction. Let’s make every click feel like comfort.
