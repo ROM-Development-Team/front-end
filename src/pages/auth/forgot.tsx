@@ -1,3 +1,4 @@
+import { EnvelopeIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 
 const Login = () => {
@@ -13,45 +14,47 @@ const Login = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-1 flex-col justify-center gap-4 rounded-t-3xl bg-white p-8 md:rounded-none">
+        <div className="flex flex-1 flex-col gap-4 bg-white p-8">
           <img
             className="h-20 self-center"
             src="/assets/images/rom-logo.png"
             alt="Rant on me logo"
           />
           <div>
-            <p className="text-base">Welcome Back, Time to vent again?</p>
-            <p>Please enter log in details below</p>
+            <p>Forgot Password</p>
+            <p>Enter your email and we'll help you get back to venting</p>
           </div>
           <form className="flex flex-col gap-4" action="">
             <label htmlFor="">
-              <input
-                className="w-full border bg-white p-2"
-                type="text"
-                placeholder="Email Address"
-              />
+              <div className="flex items-center gap-2 rounded-sm border-1 border-gray-300 p-1">
+                <div className="ml-2">
+                  <EnvelopeIcon className="text-accent size-5"></EnvelopeIcon>
+                </div>
+
+                <div className="flex w-full flex-col">
+                  <label className="mb-1 text-sm font-medium text-black">
+                    Email Address
+                  </label>
+                  <input
+                    className="w-full border-none bg-white text-sm font-semibold text-black focus:outline-none"
+                    type="text"
+                    placeholder="you@example.com"
+                  />
+                </div>
+              </div>
             </label>
-            <label htmlFor="">
-              <input
-                className="w-full border bg-white p-2"
-                type="text"
-                placeholder="Password"
-              />
-            </label>
-            <Link to="/forgot" className="self-end underline">
-              Forgot Password?
-            </Link>
             <input
               className="bg-accent cursor-pointer p-2 text-white"
               type="submit"
-              value="Sign in"
+              value="Send Email"
             />
           </form>
-          <p className="text-center">or</p>
-          <p className="text-center">Sign in with Google</p>
+
           <div className="flex justify-center gap-2">
             <p>Ready to vent?</p>
-            <Link to="/register">Create an Account</Link>
+            <Link to="/register" className="underline">
+              Create an Account
+            </Link>
           </div>
         </div>
       </div>
