@@ -1,7 +1,6 @@
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
 
-const Login = () => {
+const Forgot = () => {
   return (
     <main className="bg-peach-tint-300 font-quicksand flex h-screen items-center justify-center text-sm">
       <div className="mx-auto flex w-full max-w-4xl overflow-hidden rounded-lg shadow-2xl">
@@ -21,14 +20,14 @@ const Login = () => {
             alt="Rant on me logo"
           />
           <div>
-            <p>Forgot Password</p>
+            <p>Enter Your New Password</p>
             <p>Enter your email and we'll help you get back to venting</p>
           </div>
           <form className="flex flex-col gap-4" action="">
             <label htmlFor="">
               <div className="flex items-center gap-2 rounded-sm border-1 border-gray-300 p-1">
                 <div className="ml-2">
-                  <EnvelopeIcon className="text-accent size-5"></EnvelopeIcon>
+                  <EnvelopeIcon className="text-peach-tint-300 size-5"></EnvelopeIcon>
                 </div>
 
                 <div className="flex w-full flex-col">
@@ -52,13 +51,13 @@ const Login = () => {
 
           <div className="flex justify-center gap-2">
             <p>Ready to vent?</p>
-            <Link to="/register" className="underline">
+            <a className="underline" href="">
               Create an Account
-            </Link>
+            </a>
           </div>
         </div>
       </div>
     </main>
   );
 };
-export default Login;
+export default Forgot;
