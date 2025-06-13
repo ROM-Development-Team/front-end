@@ -21,8 +21,10 @@ const Reset = () => {
             alt="Rant on me logo"
           />
           <div>
-            <p>Enter your New Password </p>
-            <p>Please create a new password and confirm it below.</p>
+            <p className="font-semibold">Enter your New Password </p>
+            <p className="mt-1 text-xs text-gray-600">
+              Please create a new password and confirm it below.
+            </p>
           </div>
           <form className="flex flex-col gap-4" action="">
             <div className="flex flex-col gap-3">
