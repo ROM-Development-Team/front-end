@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Quicksand";
+  src: url("../public/assets/fonts/Quicksand-VariableFont.ttf");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-quicksand: Quicksand, sans-serif;
+  --color-peach-tint-100: #ffd6c0;
+  --color-peach-tint-200: #ffdac6;
+  --color-peach-tint-300: #ffdecc;
+  --color-peach-tint-400: #ffe2d2;
+  --color-peach-tint-500: #ffe6d9;
+  --color-accent: #ff8c6699;
+}
