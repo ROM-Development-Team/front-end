@@ -5,17 +5,18 @@ import { Link } from "react-router-dom";
 
 const Reset = () => {
   return (
-    <main className="bg-peach-tint-300 font-quicksand flex min-h-screen items-center justify-center overflow-x-auto overflow-y-auto text-xs">
+    <main className="bg-background font-quicksand text-text-primary flex min-h-screen items-center justify-center overflow-x-auto overflow-y-auto text-sm">
       <div className="flex h-full w-full max-w-3xl flex-col overflow-hidden rounded-lg shadow-2xl md:h-auto md:flex-row">
-        <div className="md:bg-peach-tint-500 bg-peach-tint-300 flex flex-1 items-center justify-center p-8 text-center">
-          <div className="md:bg-peach-tint-400 flex h-full max-h-44 flex-col items-center justify-center rounded-md bg-transparent p-8 px-4 py-8 shadow-lg">
+        <div className="md:bg-surface flex flex-1 items-center justify-center bg-transparent p-8 text-center">
+          <div className="bg-peach-200 flex h-full max-h-44 flex-col items-center justify-center rounded-md p-8 shadow-md">
             <div className="mb-4 text-xl font-semibold">Life, Unfiltered.</div>
-            <p>
+            <p className="text-text-secondary">
               Life isn’t always easy, but it always teaches. Every struggle has
               something to say if you’re willing to listen.
             </p>
           </div>
         </div>
+
         <div className="flex flex-1 flex-col justify-center gap-4 rounded-t-3xl bg-white p-8 md:rounded-none">
           <img
             className="h-20 self-center"
@@ -26,7 +27,9 @@ const Reset = () => {
             <p className="text-sm font-semibold">
               Welcome Back, Time to vent again?
             </p>
-            <p className="text-gray-600">Please enter log in details below</p>
+            <p className="text-text-secondary text-xs">
+              Please enter log in details below
+            </p>
           </div>
           <form className="flex flex-col gap-4" action="">
             <ThemedInput
@@ -45,10 +48,10 @@ const Reset = () => {
             <ThemedButton type="submit" value="Set New Password" />
           </form>
           <div className="flex justify-center gap-1 text-xs">
-            <p>Ready to vent?</p>
+            <p className="text-text-secondary">Ready to vent?</p>
             <Link
               to="/register"
-              className="text-accent text-xs font-semibold underline"
+              className="text-accent hover:text-accent-hover font-medium underline"
             >
               Create an Account
             </Link>
