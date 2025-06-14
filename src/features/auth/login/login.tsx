@@ -1,13 +1,9 @@
 import { Link } from "react-router-dom";
-import ThemedButton from "../../components/ThemedButton.tsx";
-import ThemedInput from "../../components/ThemedInput.tsx";
-import {
-  EnvelopeIcon,
-  LockClosedIcon,
-  UserIcon,
-} from "@heroicons/react/24/solid";
+import ThemedButton from "../../../components/ThemedButton.tsx";
+import ThemedInput from "../../../components/ThemedInput.tsx";
+import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 
-const Register = () => {
+const Login = () => {
   return (
     <main className="bg-peach-tint-300 font-quicksand flex h-screen items-center justify-center text-xs">
       <div className="flex h-full w-full max-w-3xl flex-col overflow-hidden rounded-lg shadow-2xl md:h-auto md:flex-row">
@@ -28,49 +24,42 @@ const Register = () => {
           />
           <div>
             <p className="text-sm font-semibold">
-              Hey There, Ready to Start Venting?
+              Welcome Back, Time to vent again?
             </p>
-            <p className="text-gray-600">
-              Create your account and speak your mind
-            </p>
+            <p className="text-gray-600">Please enter log in details below</p>
           </div>
           <form className="flex flex-col gap-4" action="">
-            <div className="flex gap-2">
-              <ThemedInput label="First Name" type="text" id="first-name" />
-              <ThemedInput label="Last Name" type="text" id="last-name" />
-            </div>
-            <ThemedInput
-                label="Username"
-                type="text"
-                id="username"
-                autoComplete="username"
-                icon={<UserIcon className="text-accent size-4" />}
-              />
             <ThemedInput
               label="Email Address"
               type="email"
               id="email"
               autoComplete="email"
-              icon={<EnvelopeIcon className="text-accent size-4" />}
+              icon={<EnvelopeIcon className="text-accent h-5 w-5" />}
             />
             <ThemedInput
               label="Password"
               type="password"
               id="password"
-              icon={<LockClosedIcon className="text-accent size-4" />}
+              icon={<LockClosedIcon className="text-accent h-5 w-5" />}
             />
-            <ThemedInput
-              label="Confirm Password"
-              type="password"
-              id="confim-password"
-              icon={<LockClosedIcon className="text-accent size-4" />}
-            />
-            <ThemedButton type="submit" value="Sign up" />
+
+            <Link
+              to="/forgot"
+              className="text-accent self-end font-semibold underline"
+            >
+              Forgot Password?
+            </Link>
+            <ThemedButton type="submit" value="Sign in" />
           </form>
+          <p className="text-center">or</p>
+          <p className="text-center">Sign in with Google</p>
           <div className="flex justify-center gap-1">
-            <p>Been here before?</p>
-            <Link to="/login" className="text-accent font-semibold underline">
-              Login
+            <p>Ready to vent?</p>
+            <Link
+              to="/register"
+              className="text-accent font-semibold underline"
+            >
+              Create an Account
             </Link>
           </div>
         </div>
@@ -78,4 +67,4 @@ const Register = () => {
     </main>
   );
 };
-export default Register;
+export default Login;
