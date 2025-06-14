@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 
 const Reset = () => {
   return (
-    <main className="bg-peach-tint-300 font-quicksand flex h-screen items-center justify-center text-xs">
+    <main className="bg-peach-tint-300 font-quicksand flex min-h-screen items-center justify-center overflow-x-auto overflow-y-auto text-xs">
       <div className="flex h-full w-full max-w-3xl flex-col overflow-hidden rounded-lg shadow-2xl md:h-auto md:flex-row">
         <div className="md:bg-peach-tint-500 bg-peach-tint-300 flex flex-1 items-center justify-center p-8 text-center">
-          <div className="bg-peach-tint-400 flex h-full max-h-44 flex-col items-center justify-center rounded-md p-8 px-4 py-8 shadow-lg">
+          <div className="md:bg-peach-tint-400 flex h-full max-h-44 flex-col items-center justify-center rounded-md bg-transparent p-8 px-4 py-8 shadow-lg">
             <div className="mb-4 text-xl font-semibold">Life, Unfiltered.</div>
             <p>
               Life isn’t always easy, but it always teaches. Every struggle has
@@ -44,11 +44,11 @@ const Reset = () => {
             />
             <ThemedButton type="submit" value="Set New Password" />
           </form>
-          <div className="flex justify-center gap-1">
+          <div className="flex justify-center gap-1 text-xs">
             <p>Ready to vent?</p>
             <Link
               to="/register"
-              className="text-accent font-semibold underline"
+              className="text-accent text-xs font-semibold underline"
             >
               Create an Account
             </Link>
