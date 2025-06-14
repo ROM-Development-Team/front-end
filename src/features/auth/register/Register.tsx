@@ -1,13 +1,10 @@
 import { Link } from "react-router-dom";
-import ThemedButton from "../../../components/ThemedButton.tsx";
-import ThemedInput from "../../../components/ThemedInput.tsx";
-import {
-  EnvelopeIcon,
-  LockClosedIcon,
-  UserIcon,
-} from "@heroicons/react/24/solid";
+import RegisterForm from "./components/RegisterForm";
+import { useRegister } from "./hooks/useRegister.ts";
 
 const Register = () => {
+  const { formData, handleChange, handleSubmit, isLoading, error } =
+    useRegister();
   return (
     <main className="bg-peach-tint-300 font-quicksand flex h-screen items-center justify-center text-xs">
       <div className="flex h-full w-full max-w-3xl flex-col overflow-hidden rounded-lg shadow-2xl md:h-auto md:flex-row">
@@ -34,39 +31,13 @@ const Register = () => {
               Create your account and speak your mind
             </p>
           </div>
-          <form className="flex flex-col gap-4" action="">
-            <div className="flex gap-2">
-              <ThemedInput label="First Name" type="text" id="first-name" />
-              <ThemedInput label="Last Name" type="text" id="last-name" />
-            </div>
-            <ThemedInput
-              label="Username"
-              type="text"
-              id="username"
-              autoComplete="username"
-              icon={<UserIcon className="text-accent size-4" />}
-            />
-            <ThemedInput
-              label="Email Address"
-              type="email"
-              id="email"
-              autoComplete="email"
-              icon={<EnvelopeIcon className="text-accent size-4" />}
-            />
-            <ThemedInput
-              label="Password"
-              type="password"
-              id="password"
-              icon={<LockClosedIcon className="text-accent size-4" />}
-            />
-            <ThemedInput
-              label="Confirm Password"
-              type="password"
-              id="confim-password"
-              icon={<LockClosedIcon className="text-accent size-4" />}
-            />
-            <ThemedButton type="submit" value="Sign up" />
-          </form>
+          <RegisterForm
+            formData={formData}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            isLoading={isLoading}
+            error={error}
+          />
           <div className="flex justify-center gap-1">
             <p>Been here before?</p>
             <Link to="/login" className="text-accent font-semibold underline">
