@@ -1,8 +1,8 @@
-import ThemedButton from "../../components/ThemedButton.tsx";
-import ThemedInput from "../../components/ThemedInput.tsx";
+import ThemedButton from "../../../components/ThemedButton.tsx";
+import ThemedInput from "../../../components/ThemedInput.tsx";
+import FadeSlideIn from "../../../components/FadeSlideIn.tsx";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
-import FadeSlideIn from "../../components/FadeSlideIn";
 
 const Reset = () => {
   return (
