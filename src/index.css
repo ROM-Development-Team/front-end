@@ -9,11 +9,29 @@
 }
 
 @theme {
-  --font-quicksand: Quicksand, sans-serif;
-  --color-peach-tint-100: #ffd6c0;
-  --color-peach-tint-200: #ffdac6;
-  --color-peach-tint-300: #ffdecc;
-  --color-peach-tint-400: #ffe2d2;
-  --color-peach-tint-500: #ffe6d9;
-  --color-accent: #ff8c6699;
+  --color-primary: #ffd6c0;
+  --color-background: #fff6f2;
+  --color-surface: #ffede6;
+
+  /* Shades for Depth */
+  --color-brown-100: #ccab99;
+  --color-brown-200: #b29586;
+  --color-brown-300: #7f6b60;
+  --color-brown-400: #4c4039;
+
+  /* Tints for Light UI */
+  --color-peach-100: #ffead2;
+  --color-peach-200: #fff2e0;
+  --color-peach-300: #fff9f6;
+
+  /* Accent and Feedback */
+  --color-accent: #ff8a65;
+  --color-accent-hover: #e6765e;
+  --color-error: #ff6f61;
+  --color-success: #ffd9a0;
+
+  /* Text */
+  --color-text-primary: #3b2f2f;
+  --color-text-secondary: #a87c7c;
+  --color-text-light: #fff;
 }

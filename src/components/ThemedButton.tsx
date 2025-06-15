@@ -12,7 +12,7 @@ const ThemedButton = ({
   return (
     <button
       {...rest}
-      className={`bg-accent cursor-pointer rounded p-2 text-white ${className}`}
+      className={`bg-accent hover:bg-accent-hover cursor-pointer rounded p-2 text-white ${className}`}
     >
       {value}
     </button>
