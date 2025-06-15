@@ -6,7 +6,7 @@ export const useLogin = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email: "",
+    email_or_username: "",
     password: "",
   });
   const [error, setError] = useState("");
@@ -19,11 +19,8 @@ export const useLogin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.email.trim()) {
-      setError("Email is required");
-      return;
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-      setError("Invalid email format");
+    if (!formData.email_or_username.trim()) {
+      setError("Email or username is required");
       return;
     }
 

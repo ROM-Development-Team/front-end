@@ -5,7 +5,7 @@ import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 
 interface LoginFormProps {
   formData: {
-    email: string;
+    email_or_username: string;
     password: string;
   };
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -25,11 +25,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
     <form className="flex flex-col gap-4" action="" onSubmit={handleSubmit}>
       {error && <p className="text-sm text-red-500">{error}</p>}
       <ThemedInput
-        label="Email Address"
-        type="email"
-        id="email"
-        value={formData.email}
-        autoComplete="email"
+        label="Email or Username"
+        id="email_or_username"
+        value={formData.email_or_username}
         onChange={handleChange}
         icon={<EnvelopeIcon className="text-accent size-4" />}
       />
