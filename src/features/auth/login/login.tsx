@@ -1,8 +1,8 @@
+import ThemedButton from "../../../components/ThemedButton.tsx";
+import ThemedInput from "../../../components/ThemedInput.tsx";
+import FadeSlideIn from "../../../components/FadeSlideIn.tsx";
 import { Link } from "react-router-dom";
-import ThemedButton from "../../components/ThemedButton.tsx";
-import ThemedInput from "../../components/ThemedInput.tsx";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
-import FadeSlideIn from "../../components/FadeSlideIn";
 
 const Login = () => {
   return (
