@@ -1,10 +1,11 @@
-import ThemedButton from "../../../components/ThemedButton.tsx";
-import ThemedInput from "../../../components/ThemedInput.tsx";
 import FadeSlideIn from "../../../components/FadeSlideIn.tsx";
 import { Link } from "react-router-dom";
-import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
+import LoginForm from "./components/LoginForm.tsx";
+import { useLogin } from "./hooks/useLogin.ts";
 
 const Login = () => {
+  const { formData, handleChange, handleSubmit, isLoading, error } = useLogin();
+
   return (
     <main className="bg-background text-text-primary flex min-h-screen items-center justify-center overflow-auto text-sm">
       <FadeSlideIn className="w-full max-w-3xl">
@@ -26,7 +27,6 @@ const Login = () => {
               src="/assets/images/rom-logo.png"
               alt="Rant on me logo"
             />
-
             <div>
               <p className="text-sm font-semibold">
                 Welcome Back, Time to vent again?
@@ -36,29 +36,20 @@ const Login = () => {
               </p>
             </div>
 
-            <form className="flex flex-col gap-4" action="">
-              <ThemedInput
-                label="Email Address"
-                type="email"
-                id="email"
-                autoComplete="email"
-                icon={<EnvelopeIcon className="text-accent size-4" />}
-              />
-              <ThemedInput
-                label="Password"
-                type="password"
-                id="password"
-                icon={<LockClosedIcon className="text-accent size-4" />}
-              />
+            <LoginForm
+              formData={formData}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              error={error}
+              isLoading={isLoading}
+            />
 
-              <Link
-                to="/forgot"
-                className="text-accent hover:text-accent-hover self-end text-xs font-medium underline"
-              >
-                Forgot Password?
-              </Link>
-              <ThemedButton type="submit" value="Sign in" />
-            </form>
+            <Link
+              to="/forgot"
+              className="text-accent hover:text-accent-hover self-end text-xs font-medium underline"
+            >
+              Forgot Password?
+            </Link>
 
             <p className="text-text-secondary text-center">or</p>
             <button
@@ -74,7 +65,6 @@ const Login = () => {
                 Sign in with Google
               </span>
             </button>
-
             <div className="flex justify-center gap-1 text-xs">
               <p>Ready to vent?</p>
               <Link
