@@ -11,8 +11,6 @@ export const loginUser = async (formData: {
   });
 
   const result = await response.json();
-  console.log(result);
-  console.log(formData);
 
   if (!response.ok) {
     throw new Error(result.message || "Failed to login");
