@@ -1,13 +1,450 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/public/assets/icons/icon.png" type="image/x-icon" />
-    <title>Rant on Me</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rant On Me</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        .gradient-text {
+            background-size: 200% 200%;
+            animation: gradientShift 3s linear infinite;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .pulse-text {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .confetti-piece {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        .emoji-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .emoji-hover:hover {
+            transform: scale(1.5);
+        }
+    </style>
+</head>
+<body class="min-h-screen relative overflow-auto bg-gradient-to-br from-orange-50 via-white to-orange-100">
+    <!-- Cursor Follower -->
+    <div id="cursorFollower" class="fixed w-6 h-6 bg-orange-400/30 rounded-full pointer-events-none z-50 mix-blend-multiply"></div>
+
+    <!-- Animated Background -->
+    <div class="absolute inset-0">
+        <div class="absolute inset-0 bg-gradient-to-r from-orange-200/20 to-orange-300/20"></div>
+        <div id="floatingEmojis"></div>
+    </div>
+
+    <!-- Confetti Container -->
+    <div id="confettiContainer" class="fixed inset-0 pointer-events-none z-40"></div>
+
+    <!-- Sound Toggle -->
+    <button id="soundToggle" class="fixed top-4 right-4 z-50 p-3 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-orange-200 hover:scale-110 active:scale-90 transition-transform">
+        <i data-lucide="volume-2" class="w-5 h-5 text-orange-600"></i>
+    </button>
+
+    <!-- Click Counter -->
+    <div id="clickCounter" class="fixed top-4 left-4 z-50 p-3 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-orange-200">
+        <span class="text-orange-600 font-bold">🎉 <span id="clickCount">0</span></span>
+    </div>
+
+    <!-- Main Content -->
+    <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-10 text-center">
+        <div class="max-w-4xl mx-auto opacity-0 translate-y-12 transition-all duration-1000 ease-out" id="mainContent">
+            <!-- Logo/Title with Hover Emoji -->
+            <div class="relative">
+                <h1 id="mainTitle" class="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 bg-clip-text text-transparent cursor-pointer select-none gradient-text hover:scale-105 transition-transform">
+                    Rant On Me
+                </h1>
+                <div id="titleEmoji" class="absolute -top-16 left-1/2 transform -translate-x-1/2 text-6xl opacity-0 scale-0 translate-y-5 transition-all duration-300"></div>
+            </div>
+
+            <!-- Tagline -->
+            <p class="text-xl md:text-2xl mb-4 text-gray-700 font-light opacity-0 transition-opacity duration-1000 delay-500" id="tagline">
+                A safe space to share what's heavy — no names, just emotions.
+            </p>
+
+            <!-- Icons -->
+            <div class="flex justify-center gap-6 mb-12 opacity-0 scale-90 transition-all duration-800 delay-800" id="iconsContainer">
+                <div class="p-3 bg-orange-100 rounded-full shadow-lg border border-orange-200 cursor-pointer hover:scale-120 hover:rotate-12 transition-transform">
+                    <i data-lucide="heart" class="w-6 h-6 text-orange-600"></i>
+                </div>
+                <div class="p-3 bg-orange-100 rounded-full shadow-lg border border-orange-200 cursor-pointer hover:scale-120 hover:-rotate-12 transition-transform">
+                    <i data-lucide="message-circle" class="w-6 h-6 text-orange-600"></i>
+                </div>
+                <div class="p-3 bg-orange-100 rounded-full shadow-lg border border-orange-200 cursor-pointer hover:scale-120 hover:rotate-12 transition-transform">
+                    <i data-lucide="shield" class="w-6 h-6 text-orange-600"></i>
+                </div>
+            </div>
+
+            <!-- Construction Message -->
+            <div class="mb-12 opacity-0 translate-y-5 transition-all duration-800 delay-1000" id="constructionMessage">
+                <p class="text-2xl md:text-3xl mb-2 text-gray-800 scale-100 hover:scale-102 transition-transform">
+                    🚧 We're still building something amazing for you 🚧
+                </p>
+            </div>
+
+            <!-- Countdown Timer with Hover Emoji -->
+            <div class="relative">
+                <div id="countdownContainer" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-8 max-w-2xl mx-auto opacity-0 scale-90 transition-all duration-800 delay-1200">
+                    <!-- Countdown items will be inserted here by JS -->
+                </div>
+                <div id="countdownEmoji" class="absolute -top-16 left-1/2 transform -translate-x-1/2 text-6xl opacity-0 scale-0 translate-y-5 transition-all duration-300"></div>
+            </div>
+
+            <!-- Launch Date -->
+            <p class="text-lg md:text-xl text-gray-600 mb-8 opacity-0 transition-opacity duration-800 delay-1500" id="launchDate">
+                Launching on <span class="font-semibold text-orange-600">July 1, 2025</span>
+            </p>
+
+            <!-- Call to Action -->
+            <div class="space-y-4 opacity-0 translate-y-5 transition-all duration-800 delay-1800" id="ctaContainer">
+                <button id="notifyButton" class="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full text-white font-semibold text-lg shadow-lg relative overflow-hidden hover:scale-105 hover:shadow-orange-200/30 active:scale-95 transition-transform">
+                    <div class="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-500 -left-full hover:left-full transition-all duration-600"></div>
+                    <span class="relative z-10">Notify Me When Ready 🔔</span>
+                </button>
+                <p class="text-sm text-gray-500 pulse-text">
+                    Be the first to know when we launch
+                </p>
+            </div>
+
+            <!-- Interactive Elements -->
+            <div class="mt-12 flex justify-center gap-4 pb-10 opacity-0 transition-opacity duration-1000 delay-2000" id="interactiveElements">
+                <div class="text-2xl cursor-pointer select-none emoji-hover" data-emoji="😊">😊</div>
+                <div class="text-2xl cursor-pointer select-none emoji-hover" data-emoji="🤗">🤗</div>
+                <div class="text-2xl cursor-pointer select-none emoji-hover" data-emoji="💝">💝</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Glow Effect -->
+    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-gradient-to-t from-orange-300/20 to-transparent rounded-full blur-3xl"></div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // State variables
+        let timeLeft = {
+            days: 0,
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+        };
+        
+        let mounted = false;
+        let showTitleEmoji = false;
+        let showCountdownEmoji = false;
+        let showConfetti = false;
+        let mousePosition = { x: 0, y: 0 };
+        let soundEnabled = true;
+        let clickCount = 0;
+        
+        // DOM elements
+        const cursorFollower = document.getElementById('cursorFollower');
+        const floatingEmojisContainer = document.getElementById('floatingEmojis');
+        const confettiContainer = document.getElementById('confettiContainer');
+        const soundToggle = document.getElementById('soundToggle');
+        const clickCounter = document.getElementById('clickCounter');
+        const clickCountDisplay = document.getElementById('clickCount');
+        const mainContent = document.getElementById('mainContent');
+        const mainTitle = document.getElementById('mainTitle');
+        const titleEmoji = document.getElementById('titleEmoji');
+        const tagline = document.getElementById('tagline');
+        const iconsContainer = document.getElementById('iconsContainer');
+        const constructionMessage = document.getElementById('constructionMessage');
+        const countdownContainer = document.getElementById('countdownContainer');
+        const countdownEmoji = document.getElementById('countdownEmoji');
+        const launchDate = document.getElementById('launchDate');
+        const ctaContainer = document.getElementById('ctaContainer');
+        const notifyButton = document.getElementById('notifyButton');
+        const interactiveElements = document.getElementById('interactiveElements');
+        
+        // Background emojis
+        const backgroundEmojis = ["😤", "💭", "🗣️", "💬", "😮‍💨", "🤐", "😔", "😌", "🫂", "❤️‍🩹"];
+        
+        // Initialize the app
+        function init() {
+            mounted = true;
+            
+            // Show main content with animation
+            setTimeout(() => {
+                mainContent.classList.remove('opacity-0', 'translate-y-12');
+                tagline.classList.remove('opacity-0');
+                iconsContainer.classList.remove('opacity-0', 'scale-90');
+                constructionMessage.classList.remove('opacity-0', 'translate-y-5');
+                countdownContainer.classList.remove('opacity-0', 'scale-90');
+                launchDate.classList.remove('opacity-0');
+                ctaContainer.classList.remove('opacity-0', 'translate-y-5');
+                interactiveElements.classList.remove('opacity-0');
+            }, 100);
+            
+            // Set up countdown
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            
+            // Create floating emojis
+            createFloatingEmojis();
+            
+            // Set up mouse tracking
+            document.addEventListener('mousemove', handleMouseMove);
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Initialize countdown display
+            renderCountdown();
+        }
+        
+        // Set up event listeners
+        function setupEventListeners() {
+            // Title hover
+            mainTitle.addEventListener('mouseenter', () => {
+                showTitleEmoji = true;
+                titleEmoji.textContent = '🗣️';
+                titleEmoji.classList.remove('opacity-0', 'scale-0', 'translate-y-5');
+                playSound('hover');
+            });
+            
+            mainTitle.addEventListener('mouseleave', () => {
+                showTitleEmoji = false;
+                titleEmoji.classList.add('opacity-0', 'scale-0', 'translate-y-5');
+            });
+            
+            // Countdown hover
+            countdownContainer.addEventListener('mouseenter', () => {
+                showCountdownEmoji = true;
+                countdownEmoji.textContent = '⏰';
+                countdownEmoji.classList.remove('opacity-0', 'scale-0', 'translate-y-5');
+                playSound('hover');
+            });
+            
+            countdownContainer.addEventListener('mouseleave', () => {
+                showCountdownEmoji = false;
+                countdownEmoji.classList.add('opacity-0', 'scale-0', 'translate-y-5');
+            });
+            
+            // Sound toggle
+            soundToggle.addEventListener('click', () => {
+                soundEnabled = !soundEnabled;
+                const icon = soundToggle.querySelector('i');
+                if (soundEnabled) {
+                    icon.setAttribute('data-lucide', 'volume-2');
+                } else {
+                    icon.setAttribute('data-lucide', 'volume-x');
+                }
+                lucide.createIcons();
+                playSound('click');
+            });
+            
+            // Notify button
+            notifyButton.addEventListener('click', () => {
+                showConfetti = true;
+                clickCount++;
+                clickCountDisplay.textContent = clickCount;
+                
+                // Animate counter
+                clickCounter.classList.add('scale-110');
+                setTimeout(() => {
+                    clickCounter.classList.remove('scale-110');
+                }, 300);
+                
+                playSound('confetti');
+                createConfetti();
+                
+                setTimeout(() => {
+                    showConfetti = false;
+                    confettiContainer.innerHTML = '';
+                }, 3000);
+            });
+            
+            // Interactive emojis
+            document.querySelectorAll('.emoji-hover').forEach(emoji => {
+                emoji.addEventListener('click', () => {
+                    playSound('click');
+                });
+            });
+            
+            // Icon hover effects
+            document.querySelectorAll('#iconsContainer > div').forEach(icon => {
+                icon.addEventListener('mouseenter', () => {
+                    playSound('hover');
+                });
+            });
+        }
+        
+        // Update countdown
+        function updateCountdown() {
+            const targetDate = new Date('2025-07-01T00:00:00').getTime();
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+            
+            if (difference > 0) {
+                timeLeft = {
+                    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                    hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                    minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+                    seconds: Math.floor((difference % (1000 * 60)) / 1000),
+                };
+                
+                renderCountdown();
+            }
+        }
+        
+        // Render countdown
+        function renderCountdown() {
+            const countdownItems = [
+                { label: 'Days', value: timeLeft.days },
+                { label: 'Hours', value: timeLeft.hours },
+                { label: 'Minutes', value: timeLeft.minutes },
+                { label: 'Seconds', value: timeLeft.seconds }
+            ];
+            
+            countdownContainer.innerHTML = '';
+            
+            countdownItems.forEach(item => {
+                const countdownItem = document.createElement('div');
+                countdownItem.className = 'bg-white/80 backdrop-blur-md rounded-2xl p-6 border border-orange-200 shadow-lg hover:scale-105 hover:-translate-y-1 hover:shadow-orange-200/20 transition-all duration-300';
+                
+                const valueElement = document.createElement('div');
+                valueElement.className = 'text-3xl md:text-4xl font-bold mb-2 text-orange-600 countdown-value';
+                valueElement.textContent = item.value.toString().padStart(2, '0');
+                
+                const labelElement = document.createElement('div');
+                labelElement.className = 'text-sm md:text-base text-gray-600 font-medium';
+                labelElement.textContent = item.label;
+                
+                countdownItem.appendChild(valueElement);
+                countdownItem.appendChild(labelElement);
+                countdownContainer.appendChild(countdownItem);
+            });
+        }
+        
+        // Create floating emojis
+        function createFloatingEmojis() {
+            for (let i = 0; i < 15; i++) {
+                const emoji = document.createElement('div');
+                emoji.className = 'absolute text-2xl select-none pointer-events-none opacity-30';
+                emoji.style.left = `${Math.random() * 100}vw`;
+                emoji.style.top = `${Math.random() * 100}vh`;
+                emoji.textContent = backgroundEmojis[Math.floor(Math.random() * backgroundEmojis.length)];
+                
+                // Add animation
+                emoji.style.animation = `float ${Math.random() * 15 + 10}s infinite ease-in-out`;
+                
+                floatingEmojisContainer.appendChild(emoji);
+            }
+        }
+        
+        // Create confetti
+        function createConfetti() {
+            confettiContainer.innerHTML = '';
+            const colors = ['#ff6b35', '#f7931e', '#ffd700', '#ff4757', '#ff6348'];
+            
+            for (let i = 0; i < 50; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.left = '50%';
+                piece.style.top = '50%';
+                
+                // Random final position
+                const finalX = Math.random() * window.innerWidth;
+                const finalY = window.innerHeight + 100;
+                
+                // Animate with setTimeout
+                setTimeout(() => {
+                    piece.style.transition = 'all 2s ease-out';
+                    piece.style.opacity = '1';
+                    piece.style.transform = `translate(${finalX - window.innerWidth / 2}px, ${finalY - window.innerHeight / 2}px) rotate(720deg) scale(1)`;
+                    
+                    setTimeout(() => {
+                        piece.style.opacity = '0';
+                        piece.style.transform = `translate(${finalX - window.innerWidth / 2}px, ${finalY - window.innerHeight / 2}px) rotate(1440deg) scale(0)`;
+                    }, 1500);
+                }, Math.random() * 500);
+                
+                confettiContainer.appendChild(piece);
+            }
+        }
+        
+        // Handle mouse movement
+        function handleMouseMove(e) {
+            mousePosition = { x: e.clientX, y: e.clientY };
+            
+            // Update cursor follower position with spring effect
+            const followerX = mousePosition.x - 12;
+            const followerY = mousePosition.y - 12;
+            
+            cursorFollower.style.transition = 'transform 0.1s ease-out';
+            cursorFollower.style.transform = `translate(${followerX}px, ${followerY}px)`;
+        }
+        
+        // Play sound
+        function playSound(type) {
+            if (!soundEnabled) return;
+            
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                if (type === 'hover') {
+                    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.1);
+                } else if (type === 'click') {
+                    oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(900, audioContext.currentTime + 0.2);
+                } else if (type === 'confetti') {
+                    oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.3);
+                }
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+            } catch (e) {
+                console.error('Audio error:', e);
+            }
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
 </html>
