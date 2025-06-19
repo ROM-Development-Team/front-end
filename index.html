@@ -53,11 +53,22 @@
         .emoji-hover:hover {
             transform: scale(1.5);
         }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .countdown-item {
+                padding: 1rem 0.5rem !important;
+            }
+            .countdown-value {
+                font-size: 1.5rem !important;
+                line-height: 2rem !important;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen relative overflow-auto bg-gradient-to-br from-orange-50 via-white to-orange-100">
-    <!-- Cursor Follower -->
-    <div id="cursorFollower" class="fixed w-6 h-6 bg-orange-400/30 rounded-full pointer-events-none z-50 mix-blend-multiply"></div>
+    <!-- Cursor Follower (hidden on touch devices) -->
+    <div id="cursorFollower" class="fixed w-6 h-6 bg-orange-400/30 rounded-full pointer-events-none z-50 mix-blend-multiply hidden md:block"></div>
 
     <!-- Animated Background -->
     <div class="absolute inset-0">
@@ -69,86 +80,86 @@
     <div id="confettiContainer" class="fixed inset-0 pointer-events-none z-40"></div>
 
     <!-- Sound Toggle -->
-    <button id="soundToggle" class="fixed top-4 right-4 z-50 p-3 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-orange-200 hover:scale-110 active:scale-90 transition-transform">
-        <i data-lucide="volume-2" class="w-5 h-5 text-orange-600"></i>
+    <button id="soundToggle" class="fixed top-4 right-4 z-50 p-2 md:p-3 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-orange-200 hover:scale-110 active:scale-90 transition-transform">
+        <i data-lucide="volume-2" class="w-4 h-4 md:w-5 md:h-5 text-orange-600"></i>
     </button>
 
     <!-- Click Counter -->
-    <div id="clickCounter" class="fixed top-4 left-4 z-50 p-3 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-orange-200">
-        <span class="text-orange-600 font-bold">🎉 <span id="clickCount">0</span></span>
+    <div id="clickCounter" class="fixed top-4 left-4 z-50 p-2 md:p-3 bg-white/80 backdrop-blur-sm rounded-full shadow-lg border border-orange-200">
+        <span class="text-orange-600 font-bold text-sm md:text-base">🎉 <span id="clickCount">0</span></span>
     </div>
 
     <!-- Main Content -->
-    <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-10 text-center">
-        <div class="max-w-4xl mx-auto opacity-0 translate-y-12 transition-all duration-1000 ease-out" id="mainContent">
+    <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-16 md:pt-10 pb-10 text-center">
+        <div class="max-w-4xl w-full mx-auto opacity-0 translate-y-12 transition-all duration-1000 ease-out" id="mainContent">
             <!-- Logo/Title with Hover Emoji -->
             <div class="relative">
-                <h1 id="mainTitle" class="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 bg-clip-text text-transparent cursor-pointer select-none gradient-text hover:scale-105 transition-transform">
+                <h1 id="mainTitle" class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 bg-clip-text text-transparent cursor-pointer select-none gradient-text hover:scale-105 transition-transform">
                     Rant On Me
                 </h1>
-                <div id="titleEmoji" class="absolute -top-16 left-1/2 transform -translate-x-1/2 text-6xl opacity-0 scale-0 translate-y-5 transition-all duration-300"></div>
+                <div id="titleEmoji" class="absolute -top-12 md:-top-16 left-1/2 transform -translate-x-1/2 text-4xl md:text-6xl opacity-0 scale-0 translate-y-5 transition-all duration-300"></div>
             </div>
 
             <!-- Tagline -->
-            <p class="text-xl md:text-2xl mb-4 text-gray-700 font-light opacity-0 transition-opacity duration-1000 delay-500" id="tagline">
+            <p class="text-lg sm:text-xl md:text-2xl mb-4 text-gray-700 font-light opacity-0 transition-opacity duration-1000 delay-500" id="tagline">
                 A safe space to share what's heavy — no names, just emotions.
             </p>
 
             <!-- Icons -->
-            <div class="flex justify-center gap-6 mb-12 opacity-0 scale-90 transition-all duration-800 delay-800" id="iconsContainer">
-                <div class="p-3 bg-orange-100 rounded-full shadow-lg border border-orange-200 cursor-pointer hover:scale-120 hover:rotate-12 transition-transform">
-                    <i data-lucide="heart" class="w-6 h-6 text-orange-600"></i>
+            <div class="flex justify-center gap-4 md:gap-6 mb-8 md:mb-12 opacity-0 scale-90 transition-all duration-800 delay-800" id="iconsContainer">
+                <div class="p-2 md:p-3 bg-orange-100 rounded-full shadow-lg border border-orange-200 cursor-pointer hover:scale-120 hover:rotate-12 transition-transform">
+                    <i data-lucide="heart" class="w-5 h-5 md:w-6 md:h-6 text-orange-600"></i>
                 </div>
-                <div class="p-3 bg-orange-100 rounded-full shadow-lg border border-orange-200 cursor-pointer hover:scale-120 hover:-rotate-12 transition-transform">
-                    <i data-lucide="message-circle" class="w-6 h-6 text-orange-600"></i>
+                <div class="p-2 md:p-3 bg-orange-100 rounded-full shadow-lg border border-orange-200 cursor-pointer hover:scale-120 hover:-rotate-12 transition-transform">
+                    <i data-lucide="message-circle" class="w-5 h-5 md:w-6 md:h-6 text-orange-600"></i>
                 </div>
-                <div class="p-3 bg-orange-100 rounded-full shadow-lg border border-orange-200 cursor-pointer hover:scale-120 hover:rotate-12 transition-transform">
-                    <i data-lucide="shield" class="w-6 h-6 text-orange-600"></i>
+                <div class="p-2 md:p-3 bg-orange-100 rounded-full shadow-lg border border-orange-200 cursor-pointer hover:scale-120 hover:rotate-12 transition-transform">
+                    <i data-lucide="shield" class="w-5 h-5 md:w-6 md:h-6 text-orange-600"></i>
                 </div>
             </div>
 
             <!-- Construction Message -->
-            <div class="mb-12 opacity-0 translate-y-5 transition-all duration-800 delay-1000" id="constructionMessage">
-                <p class="text-2xl md:text-3xl mb-2 text-gray-800 scale-100 hover:scale-102 transition-transform">
+            <div class="mb-8 md:mb-12 opacity-0 translate-y-5 transition-all duration-800 delay-1000" id="constructionMessage">
+                <p class="text-xl sm:text-2xl md:text-3xl mb-2 text-gray-800 scale-100 hover:scale-102 transition-transform">
                     🚧 We're still building something amazing for you 🚧
                 </p>
             </div>
 
             <!-- Countdown Timer with Hover Emoji -->
             <div class="relative">
-                <div id="countdownContainer" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-8 max-w-2xl mx-auto opacity-0 scale-90 transition-all duration-800 delay-1200">
+                <div id="countdownContainer" class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-8 w-full max-w-2xl mx-auto opacity-0 scale-90 transition-all duration-800 delay-1200">
                     <!-- Countdown items will be inserted here by JS -->
                 </div>
-                <div id="countdownEmoji" class="absolute -top-16 left-1/2 transform -translate-x-1/2 text-6xl opacity-0 scale-0 translate-y-5 transition-all duration-300"></div>
+                <div id="countdownEmoji" class="absolute -top-12 md:-top-16 left-1/2 transform -translate-x-1/2 text-4xl md:text-6xl opacity-0 scale-0 translate-y-5 transition-all duration-300"></div>
             </div>
 
             <!-- Launch Date -->
-            <p class="text-lg md:text-xl text-gray-600 mb-8 opacity-0 transition-opacity duration-800 delay-1500" id="launchDate">
+            <p class="text-base md:text-lg lg:text-xl text-gray-600 mb-6 md:mb-8 opacity-0 transition-opacity duration-800 delay-1500" id="launchDate">
                 Launching on <span class="font-semibold text-orange-600">July 1, 2025</span>
             </p>
 
             <!-- Call to Action -->
-            <div class="space-y-4 opacity-0 translate-y-5 transition-all duration-800 delay-1800" id="ctaContainer">
-                <button id="notifyButton" class="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full text-white font-semibold text-lg shadow-lg relative overflow-hidden hover:scale-105 hover:shadow-orange-200/30 active:scale-95 transition-transform">
+            <div class="space-y-3 md:space-y-4 opacity-0 translate-y-5 transition-all duration-800 delay-1800" id="ctaContainer">
+                <button id="notifyButton" class="px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-orange-500 to-orange-600 rounded-full text-white font-semibold text-base md:text-lg shadow-lg relative overflow-hidden hover:scale-105 hover:shadow-orange-200/30 active:scale-95 transition-transform w-full max-w-xs mx-auto">
                     <div class="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-500 -left-full hover:left-full transition-all duration-600"></div>
                     <span class="relative z-10">Notify Me When Ready 🔔</span>
                 </button>
-                <p class="text-sm text-gray-500 pulse-text">
+                <p class="text-xs md:text-sm text-gray-500 pulse-text">
                     Be the first to know when we launch
                 </p>
             </div>
 
             <!-- Interactive Elements -->
-            <div class="mt-12 flex justify-center gap-4 pb-10 opacity-0 transition-opacity duration-1000 delay-2000" id="interactiveElements">
-                <div class="text-2xl cursor-pointer select-none emoji-hover" data-emoji="😊">😊</div>
-                <div class="text-2xl cursor-pointer select-none emoji-hover" data-emoji="🤗">🤗</div>
-                <div class="text-2xl cursor-pointer select-none emoji-hover" data-emoji="💝">💝</div>
+            <div class="mt-8 md:mt-12 flex justify-center gap-3 md:gap-4 pb-6 md:pb-10 opacity-0 transition-opacity duration-1000 delay-2000" id="interactiveElements">
+                <div class="text-xl md:text-2xl cursor-pointer select-none emoji-hover" data-emoji="😊">😊</div>
+                <div class="text-xl md:text-2xl cursor-pointer select-none emoji-hover" data-emoji="🤗">🤗</div>
+                <div class="text-xl md:text-2xl cursor-pointer select-none emoji-hover" data-emoji="💝">💝</div>
             </div>
         </div>
     </div>
 
     <!-- Bottom Glow Effect -->
-    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-gradient-to-t from-orange-300/20 to-transparent rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-64 h-64 md:w-96 md:h-96 bg-gradient-to-t from-orange-300/20 to-transparent rounded-full blur-3xl"></div>
 
     <script>
         // Initialize Lucide icons
@@ -169,6 +180,7 @@
         let mousePosition = { x: 0, y: 0 };
         let soundEnabled = true;
         let clickCount = 0;
+        let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         
         // DOM elements
         const cursorFollower = document.getElementById('cursorFollower');
@@ -197,6 +209,11 @@
         function init() {
             mounted = true;
             
+            // Hide cursor follower on touch devices
+            if (isTouchDevice) {
+                cursorFollower.style.display = 'none';
+            }
+            
             // Show main content with animation
             setTimeout(() => {
                 mainContent.classList.remove('opacity-0', 'translate-y-12');
@@ -216,8 +233,10 @@
             // Create floating emojis
             createFloatingEmojis();
             
-            // Set up mouse tracking
-            document.addEventListener('mousemove', handleMouseMove);
+            // Set up mouse tracking (only for non-touch devices)
+            if (!isTouchDevice) {
+                document.addEventListener('mousemove', handleMouseMove);
+            }
             
             // Set up event listeners
             setupEventListeners();
@@ -228,31 +247,45 @@
         
         // Set up event listeners
         function setupEventListeners() {
-            // Title hover
-            mainTitle.addEventListener('mouseenter', () => {
-                showTitleEmoji = true;
-                titleEmoji.textContent = '🗣️';
-                titleEmoji.classList.remove('opacity-0', 'scale-0', 'translate-y-5');
-                playSound('hover');
-            });
-            
-            mainTitle.addEventListener('mouseleave', () => {
-                showTitleEmoji = false;
-                titleEmoji.classList.add('opacity-0', 'scale-0', 'translate-y-5');
-            });
-            
-            // Countdown hover
-            countdownContainer.addEventListener('mouseenter', () => {
-                showCountdownEmoji = true;
-                countdownEmoji.textContent = '⏰';
-                countdownEmoji.classList.remove('opacity-0', 'scale-0', 'translate-y-5');
-                playSound('hover');
-            });
-            
-            countdownContainer.addEventListener('mouseleave', () => {
-                showCountdownEmoji = false;
-                countdownEmoji.classList.add('opacity-0', 'scale-0', 'translate-y-5');
-            });
+            // Title hover (only for non-touch devices)
+            if (!isTouchDevice) {
+                mainTitle.addEventListener('mouseenter', () => {
+                    showTitleEmoji = true;
+                    titleEmoji.textContent = '🗣️';
+                    titleEmoji.classList.remove('opacity-0', 'scale-0', 'translate-y-5');
+                    playSound('hover');
+                });
+                
+                mainTitle.addEventListener('mouseleave', () => {
+                    showTitleEmoji = false;
+                    titleEmoji.classList.add('opacity-0', 'scale-0', 'translate-y-5');
+                });
+                
+                // Countdown hover (only for non-touch devices)
+                countdownContainer.addEventListener('mouseenter', () => {
+                    showCountdownEmoji = true;
+                    countdownEmoji.textContent = '⏰';
+                    countdownEmoji.classList.remove('opacity-0', 'scale-0', 'translate-y-5');
+                    playSound('hover');
+                });
+                
+                countdownContainer.addEventListener('mouseleave', () => {
+                    showCountdownEmoji = false;
+                    countdownEmoji.classList.add('opacity-0', 'scale-0', 'translate-y-5');
+                });
+            } else {
+                // Add touch alternative for title emoji
+                mainTitle.addEventListener('click', () => {
+                    showTitleEmoji = !showTitleEmoji;
+                    if (showTitleEmoji) {
+                        titleEmoji.textContent = '🗣️';
+                        titleEmoji.classList.remove('opacity-0', 'scale-0', 'translate-y-5');
+                    } else {
+                        titleEmoji.classList.add('opacity-0', 'scale-0', 'translate-y-5');
+                    }
+                    playSound('click');
+                });
+            }
             
             // Sound toggle
             soundToggle.addEventListener('click', () => {
@@ -295,12 +328,14 @@
                 });
             });
             
-            // Icon hover effects
-            document.querySelectorAll('#iconsContainer > div').forEach(icon => {
-                icon.addEventListener('mouseenter', () => {
-                    playSound('hover');
+            // Icon hover effects (only for non-touch devices)
+            if (!isTouchDevice) {
+                document.querySelectorAll('#iconsContainer > div').forEach(icon => {
+                    icon.addEventListener('mouseenter', () => {
+                        playSound('hover');
+                    });
                 });
-            });
+            }
         }
         
         // Update countdown
@@ -334,14 +369,14 @@
             
             countdownItems.forEach(item => {
                 const countdownItem = document.createElement('div');
-                countdownItem.className = 'bg-white/80 backdrop-blur-md rounded-2xl p-6 border border-orange-200 shadow-lg hover:scale-105 hover:-translate-y-1 hover:shadow-orange-200/20 transition-all duration-300';
+                countdownItem.className = 'bg-white/80 backdrop-blur-md rounded-xl md:rounded-2xl p-3 md:p-4 lg:p-6 border border-orange-200 shadow-lg hover:scale-105 hover:-translate-y-1 hover:shadow-orange-200/20 transition-all duration-300 countdown-item';
                 
                 const valueElement = document.createElement('div');
-                valueElement.className = 'text-3xl md:text-4xl font-bold mb-2 text-orange-600 countdown-value';
+                valueElement.className = 'text-2xl sm:text-3xl md:text-4xl font-bold mb-1 md:mb-2 text-orange-600 countdown-value';
                 valueElement.textContent = item.value.toString().padStart(2, '0');
                 
                 const labelElement = document.createElement('div');
-                labelElement.className = 'text-sm md:text-base text-gray-600 font-medium';
+                labelElement.className = 'text-xs sm:text-sm md:text-base text-gray-600 font-medium';
                 labelElement.textContent = item.label;
                 
                 countdownItem.appendChild(valueElement);
@@ -354,7 +389,7 @@
         function createFloatingEmojis() {
             for (let i = 0; i < 15; i++) {
                 const emoji = document.createElement('div');
-                emoji.className = 'absolute text-2xl select-none pointer-events-none opacity-30';
+                emoji.className = 'absolute text-xl md:text-2xl select-none pointer-events-none opacity-30';
                 emoji.style.left = `${Math.random() * 100}vw`;
                 emoji.style.top = `${Math.random() * 100}vh`;
                 emoji.textContent = backgroundEmojis[Math.floor(Math.random() * backgroundEmojis.length)];
