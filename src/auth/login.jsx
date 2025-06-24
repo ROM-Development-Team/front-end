@@ -49,6 +49,12 @@ export default function LoginForm() {
     setIsLoading(false);
 
     if (result.status === "success") {
+      localStorage.setItem("user", JSON.stringify({
+        user_id: result.user_id,
+        token: result.token
+      }));
+      console.log(result);
+
       setModal({
         show: true,
         title: "Login Successful 🎉",
@@ -199,6 +205,11 @@ export default function LoginForm() {
                 const result = await google({ idToken: credentialResponse.credential });
 
                 if (result.status === "success") {
+                  localStorage.setItem("user", JSON.stringify({
+                    user_id: result.user_id,
+                    token: result.token
+                  }));
+
                   setModal({
                     show: true,
                     title: "Login Successful 🎉",

@@ -4,11 +4,18 @@ import { VitePWA } from 'vite-plugin-pwa';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  build: {
+    sourcemap: false, 
+    minify: 'esbuild', 
+  },
   plugins: [
     react(),
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.js',
       includeAssets: ['favicon.svg', 'logo.png', 'robots.txt'],
       manifest: {
         name: 'Rant on Me',
@@ -29,6 +36,7 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
           },
+          
         ],
       },
       workbox: {

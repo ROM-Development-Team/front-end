@@ -1,4 +1,5 @@
 import { endpoints } from './config';
+import { requestPermissionAndSaveToken } from './push';
 
 export const google = async (userData) => {
   const url = `${endpoints.google}`;
@@ -22,6 +23,9 @@ export const google = async (userData) => {
     }
 
     localStorage.setItem("user", JSON.stringify(data));
+    if (data.user_id) {
+      await requestPermissionAndSaveToken(data.user_id);
+    }
     return {
       status: "success",
       message: data.message,
@@ -60,6 +64,9 @@ export const login = async (userData) => {
 
     if (data.status === 'success') {
       localStorage.setItem('user', JSON.stringify(data));
+      if (data.user_id) {
+        await requestPermissionAndSaveToken(data.user_id);
+      }
       return { 
         status: 'success', 
         message: data.message, 

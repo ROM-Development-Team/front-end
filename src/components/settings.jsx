@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Trash2, Shield, Bell, UserX, Lock, LogOut } from "lucide-react";
+import { X, Trash2, Shield, Bell, UserX, User, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Modal from "./modal";
@@ -10,23 +10,26 @@ const SettingsSidebar = ({ show, onClose }) => {
   const navigate = useNavigate();
 
   const settingsItems = [
-    { icon: Lock, label: "Account Settings", to: "/profile" },
-    { icon: Shield, label: "Privacy Settings", to: "/settings/privacy", disabled: true },
-    { icon: Bell, label: "Notification Preferences", to: "/settings/notifications", disabled: true },
-    { icon: UserX, label: "Blocked Users", to: "/settings/blocked", disabled: true },
-    { icon: Trash2, label: "Delete Account", to: "/settings/delete", danger: true, disabled: true },
+    { icon: User, label: "Profile Settings", to: "/profile" },
+    // { icon: Shield, label: "Privacy Settings", to: "/settings/privacy", status: "development" },
+    // { icon: Bell, label: "Notification Preferences", to: "/settings/notifications", status: "development" },
+    // { icon: UserX, label: "Blocked Users", to: "/settings/blocked", status: "development" },
+    // { icon: Trash2, label: "Delete Account", to: "/settings/delete", danger: true, status: "development" },
     { icon: LogOut, label: "Log Out", to: "/", danger: true },
   ];
 
   const navItems = [
-    { emoji: "📁", label: "Saved / Bookmarked Rants", to: "/saved", disabled: true },
-    { emoji: "📨", label: "Anonymous Inbox / Rants Received", to: "/inbox", disabled: true },
-    { emoji: "📊", label: "Emotional Trends", to: "/trends", disabled: true },
-    { emoji: "🎙️", label: "Voice Rants", to: "/voice", disabled: true },
-    { emoji: "💬", label: "Chat / Messages", to: "/chat", disabled: true },
-    { emoji: "🔐", label: "Whispers (Private Threads)", to: "/whispers", disabled: true },
-    { emoji: "📅", label: "Time Capsule", to: "/time-capsule", disabled: true },
-    { emoji: "📈", label: "Rant Analytics", to: "/analytics", disabled: true },
+    { emoji: "🌡️", label: "Emotional Thermometer", to: "/thermometer", status: "new" },
+    { emoji: "📨", label: "Rants Received", to: "/rants", status: "new" },
+    { emoji: "🕳️", label: "Send to Void", to: "/void", status: "new" },
+    { emoji: "🤖", label: "Rant AI", to: "/rant", status: "new" },
+    { emoji: "🗣️", label: "Rant Voice AI", to: "/voice", status: "new" }
+    // { emoji: "📁", label: "Saved / Bookmarked Rants", to: "/saved", status: "development" },
+    // { emoji: "🎙️", label: "Voice Rants", to: "/voice", status: "development" },
+    // { emoji: "💬", label: "Chat / Messages", to: "/chat", status: "development" },
+    // { emoji: "🔐", label: "Whispers (Private Threads)", to: "/whispers", status: "development" },
+    // { emoji: "📅", label: "Time Capsule", to: "/time-capsule", status: "development" },
+    // { emoji: "📈", label: "Rant Analytics", to: "/analytics", status: "development" },
   ];
 
   const handleClick = (item) => {
@@ -36,12 +39,25 @@ const SettingsSidebar = ({ show, onClose }) => {
       onClose();                       
       return;
     }
-    if (item.disabled) {
-      setModalMessage(`${item.label} is currently in development.`);
+    if (item.status === "development") {
+      setModalMessage(`${item.label} is currently under development. Coming soon!`);
       setShowModal(true);
     } else {
       navigate(item.to);
       onClose();
+    }
+  };
+
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case "new":
+        return <span className="text-[10px] text-green-600">NEW</span>;
+      case "working":
+        return <span className="text-[10px] text-blue-600">✓</span>;
+      case "development":
+        return <span className="text-[10px] text-gray-500">⌛</span>;
+      default:
+        return null;
     }
   };
 
@@ -78,30 +94,35 @@ const SettingsSidebar = ({ show, onClose }) => {
                     <button
                       key={i}
                       onClick={() => handleClick(item)}
-                      className={`w-full flex items-start gap-3 p-3 rounded-xl transition ${
+                      className={`w-full flex items-start justify-between gap-3 p-3 rounded-xl transition ${
                         item.danger
                           ? "hover:bg-red-50"
                           : "hover:bg-orange-50"
-                      }`}
+                      } ${item.status === "development" ? "opacity-70" : ""}`}
                     >
-                      <div
-                        className={`w-9 h-9 flex items-center justify-center rounded-md ${
-                          item.danger ? "bg-red-100" : "bg-orange-100"
-                        }`}
-                      >
-                        <item.icon
-                          size={16}
-                          className={item.danger ? "text-red-600" : "text-orange-600"}
-                        />
-                      </div>
-                      <div className="text-left">
-                        <p
-                          className={`font-medium ${
-                            item.danger ? "text-red-600" : "text-gray-800"
-                          }`}
+                      <div className="flex gap-3">
+                        <div
+                          className={`w-9 h-9 flex items-center justify-center rounded-md ${
+                            item.danger ? "bg-red-100" : "bg-orange-100"
+                          } ${item.status === "development" ? "opacity-70" : ""}`}
                         >
-                          {item.label}
-                        </p>
+                          <item.icon
+                            size={16}
+                            className={item.danger ? "text-red-600" : "text-orange-600"}
+                          />
+                        </div>
+                        <div className="text-left">
+                          <p
+                            className={`font-medium ${
+                              item.danger ? "text-red-600" : "text-gray-800"
+                            }`}
+                          >
+                            {item.label}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        {getStatusBadge(item.status)}
                       </div>
                     </button>
                   ))}
@@ -109,19 +130,28 @@ const SettingsSidebar = ({ show, onClose }) => {
               </div>
 
               <div className="mb-6 mt-6">
-                <h4 className="text-xs font-semibold text-gray-500 uppercase mb-3">Navigation</h4>
+                <h4 className="text-xs font-semibold text-gray-500 uppercase mb-3">Features</h4>
                 <div className="space-y-2">
                   {navItems.map((item, i) => (
                     <button
                       key={i}
                       onClick={() => handleClick(item)}
-                      className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-orange-50 transition"
+                      className={`w-full flex items-center justify-between gap-3 p-3 rounded-xl hover:bg-orange-50 transition ${
+                        item.status === "development" ? "opacity-70" : ""
+                      }`}
                     >
-                      <div className="w-9 h-9 flex items-center justify-center bg-orange-100 rounded-md text-sm">
-                        {item.emoji}
+                      <div className="flex gap-3">
+                        <div className={`w-9 h-9 flex items-center justify-center bg-orange-100 rounded-md text-sm ${
+                          item.status === "development" ? "opacity-70" : ""
+                        }`}>
+                          {item.emoji}
+                        </div>
+                        <div className="text-left">
+                          <p className="font-medium text-gray-800">{item.label}</p>
+                        </div>
                       </div>
-                      <div className="text-left">
-                        <p className="font-medium text-gray-800">{item.label}</p>
+                      <div className="flex items-center">
+                        {getStatusBadge(item.status)}
                       </div>
                     </button>
                   ))}

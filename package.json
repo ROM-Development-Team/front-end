@@ -10,14 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pollinations/react": "^2.0.7",
     "@react-oauth/google": "^0.12.2",
     "@tailwindcss/vite": "^4.1.10",
+    "firebase": "^11.9.1",
     "framer-motion": "^12.18.1",
+    "html2canvas": "^1.4.1",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.515.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.2"
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.6.2",
+    "react-speech-recognition": "^4.0.1",
+    "recharts": "^2.15.3",
+    "ws": "^8.18.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

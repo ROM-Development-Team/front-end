@@ -10,4 +10,8 @@ export const endpoints = {
 
   // User
   account: `${API_URL}/api/v1/account`,
+  thermometer: `${API_URL}/api/v1/thermometer`,
+  rant: `${API_URL}/api/v1/rant`,
+  push: `${API_URL}/api/v1/push`,
+  posts: `${API_URL}/api/v1/posts`,
 };

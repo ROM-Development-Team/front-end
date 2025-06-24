@@ -1,8 +1,7 @@
 import { useEffect, useState, lazy, Suspense } from 'react';
-
-const LandingPage = lazy(() => import('../pages/landingPage'));
-const AppUI = lazy(() => import('../App')); 
-const LoadingScreen = lazy(() => import('./loadingScreen')); 
+import LoadingScreen from './loadingScreen';
+import LandingPage from '../pages/landingPage';
+import AppRoutes from './appRoutes';
 
 const DeviceGate = () => {
   const [deviceType, setDeviceType] = useState(getDeviceType());
@@ -29,7 +28,7 @@ const DeviceGate = () => {
 
   return (
     <Suspense fallback={<LoadingScreen/>}>
-      {deviceType === 'desktop' ? <LandingPage /> : <AppUI />}
+      <AppRoutes />
     </Suspense>
   );
 };

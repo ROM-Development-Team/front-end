@@ -245,6 +245,11 @@ export default function RegisterForm() {
                 const result = await google({ idToken: credentialResponse.credential });
 
                 if (result.status === "success") {
+                  localStorage.setItem("user", JSON.stringify({
+                    user_id: result.user_id,
+                    token: result.token
+                  }));
+
                   setModal({
                     show: true,
                     title: "Login Successful 🎉",
